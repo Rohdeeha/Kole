@@ -326,6 +326,14 @@ UNFOLD = {
     },
 }
 
+# settings.py
+
+ALLOWED_HOSTS = [
+    '.vercel.app',        # Allows any Vercel deployment URL
+    '127.0.0.1',         # Localhost IP
+    'localhost',         # Localhost domain
+]
+
 CORS_ALLOWED_ORIGINS = [
     "https://app.kole.com.ng",
 ]
