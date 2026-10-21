@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 44" width="220" height="44" fill="none">
+  <defs>
+    <linearGradient id="logoLightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#15803d" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Emblem Icon -->
+  <g transform="translate(2, 2)">
+    <rect width="40" height="40" rx="10" fill="#f0fdf4" />
+    <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="9.25" stroke="url(#logoLightGrad)" stroke-width="1.2" stroke-opacity="0.3" />
+    
+    <!-- Recycling Leaf loop -->
+    <g transform="translate(6, 6) scale(0.58)">
+      <path d="M24 6 C30 6 38 10 40 18 L43 14 M40 18 L34 18" stroke="url(#logoLightGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M40 24 C40 32 32 40 22 41 L24 45 M22 41 L25 36" stroke="url(#logoLightGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M12 36 C6 30 6 18 15 10 L12 7 M15 10 L18 14" stroke="url(#logoLightGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M24 30 C24 20 33 16 33 16 C33 16 28 26 24 30 Z" fill="#16a34a" />
+      <path d="M24 30 C24 22 17 19 17 19 C17 19 21 27 24 30 Z" fill="#15803d" />
+    </g>
+  </g>
+
+  <!-- Brand Typography -->
+  <g transform="translate(52, 6)">
+    <!-- Primary Brand Wordmark -->
+    <text x="0" y="21" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="800" fill="#0f172a" letter-spacing="0.5">
+      KÓL<tspan fill="#16a34a">Ẹ̀</tspan>
+    </text>
+    <!-- Brand Tagline / Subtitle -->
+    <text x="1" y="32" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="700" fill="#15803d" letter-spacing="1.8">
+      WASTE INTELLIGENCE
+    </text>
+  </g>
+</svg>

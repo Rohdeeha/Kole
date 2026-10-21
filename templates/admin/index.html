@@ -1,0 +1,154 @@
+{% extends 'admin/base.html' %}
+{% load i18n %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col lg:flex-row gap-6">
+    <!-- Main Situation Room Command Area -->
+    <div class="flex flex-col gap-6 grow">
+        <!-- Situation Room Banner -->
+        <div class="kole-dashboard-banner">
+            <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="kole-banner-tag">
+                            <span class="kole-banner-tag-pulse"></span>
+                            Live Dispatch Active
+                        </span>
+                        <span class="text-xs uppercase tracking-wider font-semibold text-emerald-100">Operations Hub</span>
+                    </div>
+                    <h1>KÓLẸ̀ Situation Room</h1>
+                    <p>
+                        Real-time waste dispatch, cluster governance, commercial pickups, and financial settlements.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="/admin/core/pickuprequest/add/" class="kole-banner-btn">
+                        <span class="material-symbols-outlined text-base">add_circle</span>
+                        New Dispatch
+                    </a>
+                </div>
+            </div>
+            <!-- Background recycling symbol watermark -->
+            <span class="material-symbols-outlined kole-banner-watermark">recycling</span>
+        </div>
+
+        <!-- Metric KPI Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <!-- Pickup Requests -->
+            <a href="/admin/core/pickuprequest/" class="kole-card">
+                <div class="flex items-center justify-between">
+                    <div class="kole-icon-box kole-icon-green">
+                        <span class="material-symbols-outlined">local_shipping</span>
+                    </div>
+                    {% if kpi.pickup_pending > 0 %}
+                    <span class="kole-pill kole-pill-amber">
+                        {{ kpi.pickup_pending }} Pending
+                    </span>
+                    {% else %}
+                    <span class="kole-pill kole-pill-green">
+                        Normal SLA
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="mt-4">
+                    <div class="kole-card-count">{{ kpi.pickup_total }}</div>
+                    <div class="kole-card-title">Pickup Requests</div>
+                    <div class="kole-card-desc">Total customer evacuations logged</div>
+                </div>
+            </a>
+
+            <!-- Collector Fleet -->
+            <a href="/admin/core/collectorprofile/" class="kole-card">
+                <div class="flex items-center justify-between">
+                    <div class="kole-icon-box kole-icon-blue">
+                        <span class="material-symbols-outlined">badge</span>
+                    </div>
+                    <span class="kole-pill kole-pill-gray">Fleet Operations</span>
+                </div>
+                <div class="mt-4">
+                    <div class="kole-card-count">{{ kpi.collectors_count }}</div>
+                    <div class="kole-card-title">Collector Profiles</div>
+                    <div class="kole-card-desc">Authorized waste management partners</div>
+                </div>
+            </a>
+
+            <!-- Geographic Clusters -->
+            <a href="/admin/core/cluster/" class="kole-card">
+                <div class="flex items-center justify-between">
+                    <div class="kole-icon-box kole-icon-teal">
+                        <span class="material-symbols-outlined">map</span>
+                    </div>
+                    <span class="kole-pill kole-pill-gray">Geo Fencing</span>
+                </div>
+                <div class="mt-4">
+                    <div class="kole-card-count">{{ kpi.clusters_count }}</div>
+                    <div class="kole-card-title">Geographic Clusters</div>
+                    <div class="kole-card-desc">Territory routes & containment zones</div>
+                </div>
+            </a>
+
+            <!-- Commercial Organizations -->
+            <a href="/admin/core/organizationprofile/" class="kole-card">
+                <div class="flex items-center justify-between">
+                    <div class="kole-icon-box kole-icon-purple">
+                        <span class="material-symbols-outlined">corporate_fare</span>
+                    </div>
+                    <span class="kole-pill kole-pill-gray">{{ kpi.evacuations_count }} Active</span>
+                </div>
+                <div class="mt-4">
+                    <div class="kole-card-count">{{ kpi.organizations_count }}</div>
+                    <div class="kole-card-title">Organization Profiles</div>
+                    <div class="kole-card-desc">Commercial entities & staging bays</div>
+                </div>
+            </a>
+
+            <!-- Cluster Assistances -->
+            <a href="/admin/core/clusterassistance/" class="kole-card">
+                <div class="flex items-center justify-between">
+                    <div class="kole-icon-box kole-icon-orange">
+                        <span class="material-symbols-outlined">handshake</span>
+                    </div>
+                    {% if kpi.assistances_count > 0 %}
+                    <span class="kole-pill kole-pill-red">
+                        {{ kpi.assistances_count }} Requested
+                    </span>
+                    {% else %}
+                    <span class="kole-pill kole-pill-gray">Mutual Aid</span>
+                    {% endif %}
+                </div>
+                <div class="mt-4">
+                    <div class="kole-card-count">{{ kpi.assistances_count }}</div>
+                    <div class="kole-card-title">Cluster Assistances</div>
+                    <div class="kole-card-desc">Cross-zone emergency evacuations</div>
+                </div>
+            </a>
+
+            <!-- Community Waitlist -->
+            <a href="/admin/core/waitlistentry/" class="kole-card">
+                <div class="flex items-center justify-between">
+                    <div class="kole-icon-box kole-icon-green">
+                        <span class="material-symbols-outlined">hourglass_top</span>
+                    </div>
+                    <span class="kole-pill kole-pill-gray">Expansion Pipeline</span>
+                </div>
+                <div class="mt-4">
+                    <div class="kole-card-count">{{ kpi.waitlist_count }}</div>
+                    <div class="kole-card-title">Waitlist Entries</div>
+                    <div class="kole-card-desc">Prospective customers in unserved zones</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- History / Audit Log Sidebar -->
+    <div class="lg:w-80 shrink-0">
+        {% include "unfold/helpers/history.html" %}
+    </div>
+</div>
+{% endblock %}

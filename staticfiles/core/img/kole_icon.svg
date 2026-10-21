@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+  <defs>
+    <linearGradient id="koleGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="100%" stop-color="#16a34a" />
+    </linearGradient>
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#16a34a" flood-opacity="0.35" />
+    </filter>
+  </defs>
+  <!-- Rounded Background Container -->
+  <rect width="48" height="48" rx="12" fill="#0f172a" />
+  <rect x="1" y="1" width="46" height="46" rx="11" stroke="url(#koleGreenGrad)" stroke-width="1.5" stroke-opacity="0.6" />
+  
+  <!-- Dynamic Triangular Recycling / Eco Leaf Emblem -->
+  <g transform="translate(8, 8) scale(0.67)" filter="url(#glow)">
+    <!-- Loop Arrow 1 (Top) -->
+    <path d="M24 6 C30 6 38 10 40 18 L43 14 M40 18 L34 18" stroke="url(#koleGreenGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Loop Arrow 2 (Right/Bottom) -->
+    <path d="M40 24 C40 32 32 40 22 41 L24 45 M22 41 L25 36" stroke="url(#koleGreenGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Loop Arrow 3 (Left) -->
+    <path d="M12 36 C6 30 6 18 15 10 L12 7 M15 10 L18 14" stroke="url(#koleGreenGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Center Leaf Sprout -->
+    <path d="M24 30 C24 20 33 16 33 16 C33 16 28 26 24 30 Z" fill="#22c55e" />
+    <path d="M24 30 C24 22 17 19 17 19 C17 19 21 27 24 30 Z" fill="#16a34a" />
+  </g>
+</svg>
