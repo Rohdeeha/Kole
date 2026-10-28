@@ -54,9 +54,9 @@ AUTH_USER_MODEL = 'core.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'kole_backend.middleware.DevNoCacheMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -326,14 +326,54 @@ UNFOLD = {
     },
 }
 
-# settings.py
+from corsheaders.defaults import default_headers
 
 ALLOWED_HOSTS = [
-    '.vercel.app',        # Allows any Vercel deployment URL
-    '127.0.0.1',         # Localhost IP
-    'localhost',         # Localhost domain
+    '*',
+    '.vercel.app',
+    'kole-pi.vercel.app',
+    '127.0.0.1',
+    'localhost',
+    'app.kole.com.ng',
+    'kole.com.ng',
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "https://kole-pi.vercel.app",
     "https://app.kole.com.ng",
+    "https://kole.com.ng",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
 ]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https:\/\/.*\.vercel\.app$",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True  # Allows smooth frontend preview development and Vercel branch deployments
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'authorization',
+    'content-type',
+    'x-csrftoken',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}

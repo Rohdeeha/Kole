@@ -9,6 +9,7 @@ from ckeditor.fields import RichTextField
 
 class UserRole(models.TextChoices):
     RESIDENT = 'RESIDENT', 'Resident'
+    ORGANIZATION = 'ORGANIZATION', 'Commercial / Organization'
     COLLECTOR_DRIVER = 'COLLECTOR_DRIVER', 'Collector Driver'
     COLLECTOR_ADMIN = 'COLLECTOR_ADMIN', 'Collector Admin'
     GOVT_SUPERVISOR = 'GOVT_SUPERVISOR', 'Government Supervisor'
@@ -30,6 +31,8 @@ class ClusterType(models.TextChoices):
 
 class PickupStatus(models.TextChoices):
     PENDING = 'PENDING', 'Pending'
+    PENDING_QUOTE = 'PENDING_QUOTE', 'Pending Quote'
+    QUOTED = 'QUOTED', 'Quoted'
     ASSIGNED = 'ASSIGNED', 'Assigned'
     IN_TRANSIT = 'IN_TRANSIT', 'In Transit'
     ARRIVED = 'ARRIVED', 'Arrived'
@@ -141,10 +144,12 @@ class CollectorProfile(models.Model):
     vehicle_plate_num = models.CharField(max_length=50, null=True, blank=True)
     is_available = models.BooleanField(default=True)
     
-    # Paystack Subaccount integration for direct 80% automated payout split
+    # Paystack Subaccount integration for direct automated payout split
     paystack_subaccount_code = models.CharField(max_length=100, null=True, blank=True, help_text="e.g. ACCT_xxxxxxx")
     settlement_bank = models.CharField(max_length=100, null=True, blank=True)
+    bank_code = models.CharField(max_length=20, null=True, blank=True)
     account_number = models.CharField(max_length=20, null=True, blank=True)
+    account_name = models.CharField(max_length=150, null=True, blank=True)
     
     # Location matching geographic cluster constraints
     current_lat = models.DecimalField(max_digits=10, decimal_places=8, null=True, blank=True)
@@ -172,11 +177,13 @@ class PickupRequest(models.Model):
     status = models.CharField(max_length=50, choices=PickupStatus.choices, default=PickupStatus.PENDING)
     payment_status = models.CharField(max_length=50, choices=PaymentStatus.choices, default=PaymentStatus.UNPAID)
     
+    is_emergency = models.BooleanField(default=False)
     pickup_address = models.TextField()
     latitude = models.DecimalField(max_digits=10, decimal_places=8)
     longitude = models.DecimalField(max_digits=11, decimal_places=8)
     waste_volume_est = models.CharField(max_length=50, default='STANDARD_BIN')
     fixed_service_fee = models.DecimalField(max_digits=12, decimal_places=2, default=1500.00)
+    quote_price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     
     sla_due_at = models.DateTimeField()
     sla_breached_at = models.DateTimeField(null=True, blank=True)
@@ -250,6 +257,7 @@ class WaitlistEntry(models.Model):
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=20)
     area_name = models.CharField(max_length=150, help_text="e.g. Owode Ede, Akepe")
+    cluster = models.ForeignKey(Cluster, on_delete=models.SET_NULL, null=True, blank=True, related_name='waitlist_entries')
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
